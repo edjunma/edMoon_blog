@@ -1,10 +1,6 @@
 import Head from 'next/head'
 import { PostCard, Categories, PostWidget } from '../components';
-
-const posts = [
-  { title: 'React Testing', excerpt: 'Learn React Testing'},
-  { title: 'React with Tailwind', excerpt: 'Learn React with Tailwind'},
-];
+import { getPosts } from '../services';
 
 export default function Home() {
   return (
@@ -24,7 +20,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const posts = (await getPosts()) || [];
+
+  return {
+    props: { posts }
+  }
 }
